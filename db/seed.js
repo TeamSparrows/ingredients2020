@@ -1,27 +1,22 @@
 const ingredientsData = require('./db');
 const Ingredient = require('./models/ingredients');
-console.log('Ingredient', Ingredient);
 const User = require('./models/users');
-console.log('User', User);
 
-// console.log('ingredientsData', ingredientsData)
 User.remove({}, (err) => {
   if (err) {
     console.error(err);
-  }
+  } else {
     console.log('User Table Cleared');
-
+  }
 });
 
 Ingredient.remove({}, (err) => {
   if (err) {
     console.error(err);
-  }
+  } else {
     console.log('Ingredient Table Cleared');
-
+  }
 });
-
-
 
 ingredientsData.forEach((ing) => {
   Ingredient.create(ing);
