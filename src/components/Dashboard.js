@@ -47,12 +47,11 @@ class Dashboard extends Component {
   render() {
     return (
       <div className="Dashboard-btns">
-        <Nav />
+        <Nav logout={this.logout}/>
         <SearchIngredients
           setDashboardState={this.setDashboardState}
           search={this.state.search}
           username={this.state.username}
-          handleSearch={this.handleSearch}
         />
 
         <SelectImage
