@@ -22,7 +22,7 @@ class Dashboard extends Component {
       username: localStorage.getItem('username')
     };
 
-    bindAll(this, 'renderPastSearches', 'handleFile', 'handleSearch', 'handleSubmit', 'searchDb', 'renderSearch', 'logout', 'isAuthenticated');
+    bindAll(this, 'renderPastSearches', 'handleFile', 'handleSearch', 'handleSubmit', 'searchDb', 'renderSearch', 'logout', 'isAuthenticated', 'renderCurrentFlagged', 'renderSearchResLink');
   }
 
   logout() {
@@ -118,12 +118,10 @@ class Dashboard extends Component {
         filetype: file.type
       });
     };
-
     reader.readAsDataURL(file);
   }
 
   renderSearch(searchResName, link) {
-
     this.setState({
       searchResName: searchResName,
       searchResLink: link || ''
@@ -144,11 +142,7 @@ class Dashboard extends Component {
     })
     var lowerCaseSearch = this.state.search.toLowerCase();
     var username = this.state.username;
-
-    var data = {
-      ingredient: lowerCaseSearch,
-      username: username
-    }
+    var data = { ingredient: lowerCaseSearch, username: username }
 
     $.post('/api/ingredients', {
       data: data
@@ -161,6 +155,23 @@ class Dashboard extends Component {
     })
   }
 
+  renderCurrentFlagged() {
+    return (
+      this.state.currentFlagged.map(function(ingredient) {
+        <search className="Search-render" key={ingredient._id}>
+          <h3>{ingredient.name}</h3>
+          <p>{ingredient.link}</p>
+        </search>
+      })
+    )
+  }
+  renderSearchResLink() {
+    return this.state.searchResLink
+      ? <div>{  this.state.searchResName + ' found in database! - '}
+          <a href={this.state.searchResLink} target="_blank">{this.state.searchResLink }</a>
+        </div>
+      : <div>{ this.state.searchResName }</div>
+  }
   isAuthenticated() {
     return !this.props.auth
       ? <h1>Please log in to gain access to this page</h1>
@@ -169,14 +180,12 @@ class Dashboard extends Component {
             <button className="Logout-btn" onClick={this.logout}>LOG OUT</button>
             <h2 className="App-header">Ingredients 20/20</h2>
 
-            {/* renders search for ingredient and submit */}
             <SearchIngredients
               searchDb={this.searchDb}
               search={this.state.search}
               handleSearch={this.handleSearch}
             />
 
-            {/* renders select image and submit */}
             <SelectImage
               handleSubmit={this.handleSubmit}
               handleFile={this.handleFile}
@@ -185,25 +194,11 @@ class Dashboard extends Component {
             <img src={this.state.data_uri} className="Image-size" alt="" />
 
             <div className="Search-parent">
-                {
-                  this.state.currentFlagged.map(function(ingredient) {
-                    <search className="Search-render" key={ingredient._id}>
-                      <h3>{ingredient.name}</h3>
-                      <p>{ingredient.link}</p>
-                    </search>
-                  })
-                }
-                { this.state.passed && <div>{ this.state.passed }</div> }
+              { this.renderCurrentFlagged() }
+              { this.state.passed && <div>{ this.state.passed }</div> }
             </div>
 
-            {/* Renders Result Of Searches */}
-            {
-              this.state.searchResLink
-              ? <div>{  this.state.searchResName + ' found in database! - '}
-                  <a href={this.state.searchResLink} target="_blank">{this.state.searchResLink }</a>
-                </div>
-              : <div>{ this.state.searchResName }</div>
-            }
+            { this.renderSearchResLink() }
 
             <PastSearches
               pastSearches={this.state.pastSearches} renderPastSearches={this.renderPastSearches}
