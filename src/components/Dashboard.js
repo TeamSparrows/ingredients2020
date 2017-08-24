@@ -19,7 +19,7 @@ class Dashboard extends Component {
       username: localStorage.getItem('username')
     };
 
-    bindAll(this, 'renderPastSearches', 'handleFile', 'handleSearch', 'handleSubmit', 'searchDb', 'renderSearch', 'logout');
+    bindAll(this, 'renderPastSearches', 'handleFile', 'handleSearch', 'handleSubmit', 'searchDb', 'renderSearch', 'logout', 'isAuthenticated');
   }
 
   logout() {
@@ -50,7 +50,6 @@ class Dashboard extends Component {
     });
 
   }
-
 
   handleSearch(event) {
     this.setState({
@@ -160,74 +159,71 @@ class Dashboard extends Component {
 
   }
 
+  isAuthenticated() {
+    return !this.props.auth
+      ? <h1>Please log in to gain access to this page</h1>
+      :  ( <div className="Dashboard-btns">
+      <div>
+        <button className="Logout-btn" onClick={this.logout}>LOG OUT</button>
+      </div>
+      <div className="App-header">
+        <h2>Ingredients 20/20</h2>
+      </div>
+
+      <form className="form-control" onSubmit={this.searchDb}>
+        <input className="Ingredient-input" type="text" value={this.state.search} placeholder="Search for Ingredient"
+            onChange={this.handleSearch}/>
+        <input className="Submit-btn" type="submit" value="Submit"/>
+      </form>
+
+    <form className="form-control" onSubmit={this.handleSubmit} encType='multipart/form-data'>
+      <input className="custom-file-input" type='file' name='image' onChange={this.handleFile} />
+      <input className="Submit-btn neg-margin-t" type="submit" value="Submit"/>
+    </form>
+      <img src={this.state.data_uri} className="Image-size" alt=""></img>
+
+      <div className="Search-parent">
+          {this.state.currentFlagged.map((ingredient) => (
+            <search className="Search-render"
+              key={ingredient._id}
+            >
+            <div>
+              <h3>{ingredient.name}</h3>
+              <p>{ingredient.link}</p>
+            </div>
+            </search>
+          )
+          )}
+          {this.state.passed && <div> {this.state.passed} </div>}
+      </div>
+
+      <div>
+        {this.state.searchResLink ?
+          <div>{this.state.searchResName + ' found in database! - '}
+            <a href={this.state.searchResLink} target="_blank">{this.state.searchResLink}</a>
+          </div> :
+          <div>{this.state.searchResName}</div>
+        }
+      </div>
+
+      <div className="Button-parent">
+        <Button className="Saved-items" onClick={this.renderPastSearches}>
+          MY PAST SEARCHES
+        </Button>
+        <div>
+          {this.state.pastSearches.map((ingredient) => (
+            <search key={ingredient._id}>{ingredient.name + ' - ' + ingredient.link}<br/></search>
+          )
+          )}
+        </div>
+      </div>
+    </div>)
+  }
+
   render() {
-
-    const {isAuthenticated } = this.props.auth;
-
     return (
       <div>
-        {
-          !isAuthenticated() &&
-          <h1>Please log in to gain access to this page</h1>
-        }
-        {
-        isAuthenticated() && (
-        <div className="Dashboard-btns">
-          <div>
-            <button className="Logout-btn" onClick={this.logout}>LOG OUT</button>
-          </div>
-          <div className="App-header">
-            <h2>Ingredients 20/20</h2>
-          </div>
-
-          <form className="form-control" onSubmit={this.searchDb}>
-            <input className="Ingredient-input" type="text" value={this.state.search} placeholder="Search for Ingredient"
-                onChange={this.handleSearch}/>
-            <input className="Submit-btn" type="submit" value="Submit"/>
-          </form>
-
-        <form className="form-control" onSubmit={this.handleSubmit} encType='multipart/form-data'>
-          <input className="custom-file-input" type='file' name='image' onChange={this.handleFile} />
-          <input className="Submit-btn neg-margin-t" type="submit" value="Submit"/>
-        </form>
-          <img src={this.state.data_uri} className="Image-size" alt=""></img>
-
-          <div className="Search-parent">
-              {this.state.currentFlagged.map((ingredient) => (
-                <search className="Search-render"
-                  key={ingredient._id}
-                >
-                <div>
-                  <h3>{ingredient.name}</h3>
-                  <p>{ingredient.link}</p>
-                </div>
-                </search>
-              )
-              )}
-              {this.state.passed && <div> {this.state.passed} </div>}
-          </div>
-
-          <div>
-            {this.state.searchResLink ?
-              <div>{this.state.searchResName + ' found in database! - '}
-                <a href={this.state.searchResLink} target="_blank">{this.state.searchResLink}</a>
-              </div> :
-              <div>{this.state.searchResName}</div>
-            }
-          </div>
-
-          <div className="Button-parent">
-            <Button className="Saved-items" onClick={this.renderPastSearches}>
-              MY PAST SEARCHES
-            </Button>
-            <div>
-              {this.state.pastSearches.map((ingredient) => (
-                <search key={ingredient._id}>{ingredient.name + ' - ' + ingredient.link}<br/></search>
-              )
-              )}
-            </div>
-          </div>
-        </div>)}
+        { this.isAuthenticated() }
       </div>
     );
   }
