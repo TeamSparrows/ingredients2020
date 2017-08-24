@@ -1,6 +1,7 @@
 import React from 'react';
 const RenderReslink = (props) => {
 
+
   return (
       props.searchResLink
         ? <div>{  props.searchResName + ' found in database! - '}

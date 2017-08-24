@@ -22,7 +22,7 @@ class Dashboard extends Component {
       username: localStorage.getItem('username')
     };
 
-    bindAll(this, 'setDashboardState', 'logout', 'renderCurrentFlagged');
+    bindAll(this, 'setDashboardState', 'logout', 'renderCurrentFlagged', 'renderReslink');
   }
 
   setDashboardState(state) {
@@ -31,6 +31,15 @@ class Dashboard extends Component {
   logout() {
     this.props.auth.logout();
     this.props.history.push('/');
+  }
+  renderReslink() {
+    return (
+        this.state.searchResLink
+          ? <div>{  this.state.searchResName + ' found in database! - '}
+              <a href={this.state.searchResLink} target="_blank">{this.state.searchResLink }</a>
+            </div>
+          : <div>{this.state.searchResName}</div>
+    )
   }
 
   renderCurrentFlagged() {
@@ -71,6 +80,7 @@ class Dashboard extends Component {
           searchReslink={this.state.searchResLink}
           searchResName={this.state.searchResName}
         />
+        { this.renderReslink() }
 
         <PastSearches
           pastSearches={this.state.pastSearches}

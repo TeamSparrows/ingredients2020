@@ -37,6 +37,8 @@ class SearchIngredients extends Component {
   }
 
   handleSearch(event) {
+    console.log('event', event);
+
     console.log('handleSearch')
     this.props.setDashboardState({
       search: event.target.value
