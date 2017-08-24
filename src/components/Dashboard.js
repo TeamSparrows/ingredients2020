@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import './App.css';
-import {bindAll} from 'lodash';
+import '../App.css';
+import { bindAll } from 'lodash';
 import $ from 'jquery';
 import { Button } from 'react-bootstrap';
 
