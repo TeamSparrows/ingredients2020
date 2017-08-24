@@ -15,6 +15,7 @@ const handleAuthentication = (nextState, replace) => {
   }
 };
 
+// console.log('auth', auth.isAuthenticated())
 class App extends Component {
   render() {
     return (
@@ -25,9 +26,15 @@ class App extends Component {
               path="/"
               exact render={(props) => <Landing auth={auth} {...props} />}
             />
-            <Route
-              path="/dashboard"
-              exact render={(props) => <Dashboard auth={auth} {...props} />} />
+            {auth.isAuthenticated()
+              ? <Route
+                  path="/dashboard"
+                  exact render={(props) => <Dashboard auth={auth} {...props} />}
+                />
+              : <h1>Please log in to gain access to this page</h1>
+            }
+
+
             <Route
               path="/callback"
               render={(props) => {

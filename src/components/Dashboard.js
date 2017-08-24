@@ -22,7 +22,7 @@ class Dashboard extends Component {
       username: localStorage.getItem('username')
     };
 
-    bindAll(this, 'renderPastSearches', 'handleFile', 'handleSearch', 'handleSubmit', 'searchDb', 'renderSearch', 'logout', 'isAuthenticated', 'renderCurrentFlagged', 'renderSearchResLink');
+    bindAll(this, 'renderPastSearches', 'handleFile', 'handleSearch', 'handleSubmit', 'searchDb', 'renderSearch', 'logout', 'renderCurrentFlagged', 'renderSearchResLink');
   }
 
   logout() {
@@ -172,45 +172,37 @@ class Dashboard extends Component {
         </div>
       : <div>{ this.state.searchResName }</div>
   }
-  isAuthenticated() {
-    return !this.props.auth
-      ? <h1>Please log in to gain access to this page</h1>
-      :  (
-          <div className="Dashboard-btns">
-            <button className="Logout-btn" onClick={this.logout}>LOG OUT</button>
-            <h2 className="App-header">Ingredients 20/20</h2>
 
-            <SearchIngredients
-              searchDb={this.searchDb}
-              search={this.state.search}
-              handleSearch={this.handleSearch}
-            />
-
-            <SelectImage
-              handleSubmit={this.handleSubmit}
-              handleFile={this.handleFile}
-            />
-
-            <img src={this.state.data_uri} className="Image-size" alt="" />
-
-            <div className="Search-parent">
-              { this.renderCurrentFlagged() }
-              { this.state.passed && <div>{ this.state.passed }</div> }
-            </div>
-
-            { this.renderSearchResLink() }
-
-            <PastSearches
-              pastSearches={this.state.pastSearches} renderPastSearches={this.renderPastSearches}
-            />
-          </div>
-          )
-  }
 
   render() {
     return (
-      <div>
-        { this.isAuthenticated() }
+      <div className="Dashboard-btns">
+        <button className="Logout-btn" onClick={this.logout}>LOG OUT</button>
+        <h2 className="App-header">Ingredients 20/20</h2>
+
+        <SearchIngredients
+          searchDb={this.searchDb}
+          search={this.state.search}
+          handleSearch={this.handleSearch}
+        />
+
+        <SelectImage
+          handleSubmit={this.handleSubmit}
+          handleFile={this.handleFile}
+        />
+
+        <img src={this.state.data_uri} className="Image-size" alt="" />
+
+        <div className="Search-parent">
+          { this.renderCurrentFlagged() }
+          { this.state.passed && <div>{ this.state.passed }</div> }
+        </div>
+
+        { this.renderSearchResLink() }
+
+        <PastSearches
+          pastSearches={this.state.pastSearches} renderPastSearches={this.renderPastSearches}
+        />
       </div>
     );
   }
