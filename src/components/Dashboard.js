@@ -22,103 +22,21 @@ class Dashboard extends Component {
       username: localStorage.getItem('username')
     };
 
-    bindAll(this, 'renderPastSearches', 'handleFile', 'handleSearch', 'handleSubmit', 'searchDb', 'renderSearch', 'logout', 'renderCurrentFlagged', 'renderSearchResLink');
+    bindAll(this, 'handleSearch', 'searchDb', 'renderSearch', 'logout', 'renderCurrentFlagged', 'renderSearchResLink', 'setDashboardState');
   }
 
+  setDashboardState(state) {
+    this.setState(state);
+  }
   logout() {
     this.props.auth.logout();
     this.props.history.push('/');
-  }
-
-  renderPastSearches() {
-    var data = {
-      username: this.state.username
-    }
-    //here we need to create a get method to populate pastSearches array
-
-    $.post('/api/pastSearches', {
-      data: data
-    })
-    .done((items) => {
-      //on sucess we set the new state
-      var totalIngredients = items.reduce(function(total, el){
-        return total.concat(el);
-      }, []);
-      this.setState({
-        pastSearches: totalIngredients
-      });
-    })
-    .fail(() => {
-      console.log('failed getting items');
-    });
-
   }
 
   handleSearch(event) {
     this.setState({
       search: event.target.value
     });
-  }
-
-  handleSubmit(e) {
-    e.preventDefault();
-    const _this = this;
-    _this.setState({
-      search: '',
-      searchResName: '',
-      searchResLink: '',
-      currentFlagged: [],
-      processing: false,
-      passed: '',
-      pastSearches: [],
-    })
-    var data = {
-      data_uri: this.state.data_uri,
-      filename: this.state.filename,
-      filetype: this.state.filetype,
-      username: this.state.username
-    }
-
-    $.ajax({
-      url: '/api/image',
-      type: 'POST',
-      data: data,
-      dataType: 'json'
-    })
-    .done(function(data){
-      console.log(data);
-      if(data.slice(1).length === 0){
-        _this.setState({
-          passed: 'No Flagged Ingredients, feel free to gobble this up!'
-        })
-      }
-      _this.setState({
-        currentFlagged: data
-      });
-    })
-  }
-
-  handleFile(e) {
-    this.setState({
-      search: '',
-      searchResName: '',
-      searchResLink: '',
-      currentFlagged: [],
-      processing: false,
-      passed: '',
-      pastSearches: [],
-    })
-    const reader = new FileReader();
-    const file = e.target.files[0];
-
-    reader.onload = (upload) => {
-      this.setState({
-        data_uri: upload.target.result,
-        filename: file.name,
-        filetype: file.type
-      });
-    };
-    reader.readAsDataURL(file);
   }
 
   renderSearch(searchResName, link) {
@@ -186,10 +104,7 @@ class Dashboard extends Component {
           handleSearch={this.handleSearch}
         />
 
-        <SelectImage
-          handleSubmit={this.handleSubmit}
-          handleFile={this.handleFile}
-        />
+        <SelectImage/>
 
         <img src={this.state.data_uri} className="Image-size" alt="" />
 
@@ -201,7 +116,9 @@ class Dashboard extends Component {
         { this.renderSearchResLink() }
 
         <PastSearches
-          pastSearches={this.state.pastSearches} renderPastSearches={this.renderPastSearches}
+          pastSearches={this.state.pastSearches}
+          username={this.state.username}
+          setDashboardState={this.setDashboardState}
         />
       </div>
     );
