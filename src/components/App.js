@@ -21,9 +21,16 @@ class App extends Component {
       <div className="App">
         <BrowserRouter history={history} component={App}>
           <Switch>
-            <Route path="/" exact render={(props) => <Landing auth={auth} {...props} />} />
-            <Route path="/dashboard" exact render={(props) => <Dashboard auth={auth} {...props} />} />
-            <Route path="/callback" render={(props) => {
+            <Route
+              path="/"
+              exact render={(props) => <Landing auth={auth} {...props} />}
+            />
+            <Route
+              path="/dashboard"
+              exact render={(props) => <Dashboard auth={auth} {...props} />} />
+            <Route
+              path="/callback"
+              render={(props) => {
               handleAuthentication(props);
               return <Callback {...props} />
             }}/>
