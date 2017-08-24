@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import SearchIngredients from './SearchIngredients';
 import PastSearches from './PastSearches';
 import SelectImage from './SelectImage';
 import '../App.css';
@@ -169,11 +170,11 @@ class Dashboard extends Component {
             <h2 className="App-header">Ingredients 20/20</h2>
 
             {/* renders search for ingredient and submit */}
-            <form className="form-control" onSubmit={this.searchDb}>
-              <input className="Ingredient-input" type="text" value={this.state.search} placeholder="Search for Ingredient"
-                  onChange={this.handleSearch}/>
-              <input className="Submit-btn" type="submit" value="Submit"/>
-            </form>
+            <SearchIngredients
+              searchDb={this.searchDb}
+              search={this.state.search}
+              handleSearch={this.handleSearch}
+            />
 
             {/* renders select image and submit */}
             <SelectImage
