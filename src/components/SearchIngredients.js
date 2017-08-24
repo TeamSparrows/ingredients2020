@@ -52,7 +52,7 @@ class SearchIngredients extends Component {
           type="text"
           value={this.props.search}
           placeholder="Search for Ingredient"
-          onChange={this.props.handleSearch}
+          onChange={this.handleSearch.bind(this)}
         />
         <input
           className="Submit-btn"
