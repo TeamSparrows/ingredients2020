@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import SearchIngredients from './SearchIngredients';
 import PastSearches from './PastSearches';
 import SelectImage from './SelectImage';
+import Nav from './Nav';
 import '../App.css';
 import { bindAll } from 'lodash';
 import $ from 'jquery';
@@ -22,7 +23,7 @@ class Dashboard extends Component {
       username: localStorage.getItem('username')
     };
 
-    bindAll(this, 'handleSearch', 'renderSearch', 'logout', 'renderCurrentFlagged', 'renderSearchResLink', 'setDashboardState');
+    bindAll(this, 'setDashboardState', 'logout', 'renderCurrentFlagged', 'renderSearchResLink');
   }
 
   setDashboardState(state) {
@@ -55,8 +56,8 @@ class Dashboard extends Component {
   render() {
     return (
       <div className="Dashboard-btns">
-        <button className="Logout-btn" onClick={this.logout}>LOG OUT</button>
-        <h2 className="App-header">Ingredients 20/20</h2>
+        <Nav />
+
 
         <SearchIngredients
           setDashboardState={this.setDashboardState}
