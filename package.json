@@ -28,7 +28,8 @@
     "supertest": "^3.0.0"
   },
   "scripts": {
-    "start": "react-scripts start & nodemon server.js",
+    "start": "nodemon server.js",
+    "scripts": "react-scripts start",
     "build": "react-scripts build",
     "client-test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
