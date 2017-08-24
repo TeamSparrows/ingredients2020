@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import Landing from './Landing';
-import Callback from './Callback/Callback';
-import Auth from './Auth/Auth';
+import Landing from './landing';
+import Callback from '../callback/callback';
+import Auth from '../auth/auth';
 import history from './history';
-import Dashboard from './Dashboard';
-import './App.css';
+import Dashboard from './dashboard';
+import '../app.css';
 
 const auth = new Auth();
 
@@ -15,15 +15,27 @@ const handleAuthentication = (nextState, replace) => {
   }
 };
 
+// console.log('auth', auth.isAuthenticated())
 class App extends Component {
   render() {
     return (
       <div className="App">
         <BrowserRouter history={history} component={App}>
           <Switch>
-            <Route path="/" exact render={(props) => <Landing auth={auth} {...props} />} />
-            <Route path="/dashboard" exact render={(props) => <Dashboard auth={auth} {...props} />} />
-            <Route path="/callback" render={(props) => {
+            <Route
+              path="/"
+              exact render={(props) => <Landing auth={auth} {...props} />}
+            />
+            <Route
+              path="/dashboard"
+              exact render={(props) => <Dashboard auth={auth} {...props} />}
+            />
+            }
+
+
+            <Route
+              path="/callback"
+              render={(props) => {
               handleAuthentication(props);
               return <Callback {...props} />
             }}/>

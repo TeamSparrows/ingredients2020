@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
-import Auth from './Auth/Auth.js';
-import './App.css';
+import Auth from '../auth/auth.js';
+import '../app.css';
 
 class Landing extends Component {
 
