@@ -22,7 +22,7 @@ class Dashboard extends Component {
       username: localStorage.getItem('username')
     };
 
-    bindAll(this, 'handleSearch', 'searchDb', 'renderSearch', 'logout', 'renderCurrentFlagged', 'renderSearchResLink', 'setDashboardState');
+    bindAll(this, 'handleSearch', 'renderSearch', 'logout', 'renderCurrentFlagged', 'renderSearchResLink', 'setDashboardState');
   }
 
   setDashboardState(state) {
@@ -31,46 +31,6 @@ class Dashboard extends Component {
   logout() {
     this.props.auth.logout();
     this.props.history.push('/');
-  }
-
-  handleSearch(event) {
-    this.setState({
-      search: event.target.value
-    });
-  }
-
-  renderSearch(searchResName, link) {
-    this.setState({
-      searchResName: searchResName,
-      searchResLink: link || ''
-    });
-  }
-
-  searchDb(e) {
-    e.preventDefault();
-    this.setState({
-      search: '',
-      searchResName: '',
-      searchResLink: '',
-      currentFlagged: [],
-      data_uri: null,
-      processing: false,
-      passed: '',
-      pastSearches: [],
-    })
-    var lowerCaseSearch = this.state.search.toLowerCase();
-    var username = this.state.username;
-    var data = { ingredient: lowerCaseSearch, username: username }
-
-    $.post('/api/ingredients', {
-      data: data
-    })
-    .done((obj) => {
-      this.renderSearch(obj.name, obj.link);
-    })
-    .fail((obj) => {
-      this.renderSearch(obj.responseText);
-    })
   }
 
   renderCurrentFlagged() {
@@ -99,8 +59,9 @@ class Dashboard extends Component {
         <h2 className="App-header">Ingredients 20/20</h2>
 
         <SearchIngredients
-          searchDb={this.searchDb}
+          setDashboardState={this.setDashboardState}
           search={this.state.search}
+          username={this.state.username}
           handleSearch={this.handleSearch}
         />
 
