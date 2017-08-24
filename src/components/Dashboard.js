@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import PastSearches from './PastSearches';
 import '../App.css';
 import { bindAll } from 'lodash';
 import $ from 'jquery';
-import { Button } from 'react-bootstrap';
+
 
 class Dashboard extends Component {
   constructor(props) {
@@ -156,7 +157,6 @@ class Dashboard extends Component {
     .fail((obj) => {
       this.renderSearch(obj.responseText);
     })
-
   }
 
   isAuthenticated() {
@@ -202,11 +202,9 @@ class Dashboard extends Component {
               : <div>{ this.state.searchResName }</div>
             }
 
-            {/*renders my past searches */}
-            <div className="Button-parent">
-              <Button className="Saved-items" onClick={this.renderPastSearches}>MY PAST SEARCHES</Button>
-                {this.state.pastSearches.map(function(ingredient) {<search key={ingredient._id}>{ingredient.name + ' - ' + ingredient.link}<br/></search>})}
-            </div>
+            <PastSearches
+              pastSearches={this.state.pastSearches} renderPastSearches={this.renderPastSearches}
+            />
           </div>
           )
   }
