@@ -1,14 +1,16 @@
-import React from 'react';
-const RenderReslink = (props) => {
+import React, { Component } from 'react';
 
+class RenderReslink extends Component {
 
-  return (
-      props.searchResLink
-        ? <div>{  props.searchResName + ' found in database! - '}
-            <a href={props.searchResLink} target="_blank">{props.searchResLink }</a>
-          </div>
-        : <div>{props.searchResName}</div>
-  )
+  render() {
+    return (
+      this.props.searchResLink
+      ? <div>{  this.props.searchResName + ' found in database! - '}
+        <a href={this.props.searchResLink} target="_blank">{this.props.searchResLink }</a>
+      </div>
+      : <div>{this.props.searchResName}</div>
+    )
+  }
 }
 
 export default RenderReslink;
