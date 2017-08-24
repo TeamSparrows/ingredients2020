@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import SearchIngredients from './SearchIngredients';
-import PastSearches from './PastSearches';
-import SelectImage from './SelectImage';
-import Nav from './Nav';
-import '../App.css';
+import SearchIngredients from './searchIngredients';
+import PastSearches from './pastSearches';
+import SelectImage from './selectImage';
+import Nav from './nav';
+import '../app.css';
 import { bindAll } from 'lodash';
 import $ from 'jquery';
 
