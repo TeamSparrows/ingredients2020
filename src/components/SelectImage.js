@@ -19,10 +19,10 @@ class SelectImage extends Component {
 
 
     var data = {
-      data_uri: this.state.data_uri,
-      filename: this.state.filename,
-      filetype: this.state.filetype,
-      username: this.state.username
+      data_uri: this.props.data_uri,
+      filename: this.props.filename,
+      filetype: this.props.filetype,
+      username: this.props.username
     }
 
     $.ajax({

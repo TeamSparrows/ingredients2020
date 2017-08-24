@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import SearchIngredients from './searchIngredients';
 import PastSearches from './pastSearches';
 import SelectImage from './selectImage';
+import RenderReslink from './renderReslink';
 import Nav from './nav';
 import '../app.css';
 import { bindAll } from 'lodash';
-import $ from 'jquery';
 
 class Dashboard extends Component {
   constructor(props) {
@@ -22,7 +22,7 @@ class Dashboard extends Component {
       username: localStorage.getItem('username')
     };
 
-    bindAll(this, 'setDashboardState', 'logout', 'renderCurrentFlagged', 'renderSearchResLink');
+    bindAll(this, 'setDashboardState', 'logout', 'renderCurrentFlagged');
   }
 
   setDashboardState(state) {
@@ -43,14 +43,6 @@ class Dashboard extends Component {
       })
     )
   }
-  renderSearchResLink() {
-    return this.state.searchResLink
-      ? <div>{  this.state.searchResName + ' found in database! - '}
-          <a href={this.state.searchResLink} target="_blank">{this.state.searchResLink }</a>
-        </div>
-      : <div>{ this.state.searchResName }</div>
-  }
-
 
   render() {
     return (
@@ -63,14 +55,23 @@ class Dashboard extends Component {
           handleSearch={this.handleSearch}
         />
 
-        <SelectImage imgSrc={this.state.data_uri}/>
+        <SelectImage
+          imgSrc={this.state.data_uri}
+          data_uri={this.state.data_uri}
+          filename={this.state.filename}
+          filetype={this.state.filetype}
+          username={this.state.username}
+        />
 
         <div className="Search-parent">
           { this.renderCurrentFlagged() }
           { this.state.passed && <div>{ this.state.passed }</div> }
         </div>
 
-        { this.renderSearchResLink() }
+        <RenderReslink
+          searchReslink={this.state.searchResLink}
+          searchResName={this.state.searchResName}
+        />
 
         <PastSearches
           pastSearches={this.state.pastSearches}
