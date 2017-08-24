@@ -162,62 +162,53 @@ class Dashboard extends Component {
   isAuthenticated() {
     return !this.props.auth
       ? <h1>Please log in to gain access to this page</h1>
-      :  ( <div className="Dashboard-btns">
-      <div>
-        <button className="Logout-btn" onClick={this.logout}>LOG OUT</button>
-      </div>
-      <div className="App-header">
-        <h2>Ingredients 20/20</h2>
-      </div>
+      :  (
+          <div className="Dashboard-btns">
+            <button className="Logout-btn" onClick={this.logout}>LOG OUT</button>
+            <h2 className="App-header">Ingredients 20/20</h2>
 
-      <form className="form-control" onSubmit={this.searchDb}>
-        <input className="Ingredient-input" type="text" value={this.state.search} placeholder="Search for Ingredient"
-            onChange={this.handleSearch}/>
-        <input className="Submit-btn" type="submit" value="Submit"/>
-      </form>
+            {/* renders search for ingredient and submit */}
+            <form className="form-control" onSubmit={this.searchDb}>
+              <input className="Ingredient-input" type="text" value={this.state.search} placeholder="Search for Ingredient"
+                  onChange={this.handleSearch}/>
+              <input className="Submit-btn" type="submit" value="Submit"/>
+            </form>
 
-    <form className="form-control" onSubmit={this.handleSubmit} encType='multipart/form-data'>
-      <input className="custom-file-input" type='file' name='image' onChange={this.handleFile} />
-      <input className="Submit-btn neg-margin-t" type="submit" value="Submit"/>
-    </form>
-      <img src={this.state.data_uri} className="Image-size" alt=""></img>
+            {/* renders select image and submit */}
+            <form className="form-control" onSubmit={this.handleSubmit} encType='multipart/form-data'>
+              <input className="custom-file-input" type='file' name='image' onChange={this.handleFile} />
+              <input className="Submit-btn neg-margin-t" type="submit" value="Submit"/>
+            </form>
 
-      <div className="Search-parent">
-          {this.state.currentFlagged.map((ingredient) => (
-            <search className="Search-render"
-              key={ingredient._id}
-            >
-            <div>
-              <h3>{ingredient.name}</h3>
-              <p>{ingredient.link}</p>
+            <img src={this.state.data_uri} className="Image-size" alt="" />
+
+            <div className="Search-parent">
+                {
+                  this.state.currentFlagged.map(function(ingredient) {
+                    <search className="Search-render" key={ingredient._id}>
+                      <h3>{ingredient.name}</h3>
+                      <p>{ingredient.link}</p>
+                    </search>
+                  })
+                }
+                { this.state.passed && <div>{ this.state.passed }</div> }
             </div>
-            </search>
-          )
-          )}
-          {this.state.passed && <div> {this.state.passed} </div>}
-      </div>
 
-      <div>
-        {this.state.searchResLink ?
-          <div>{this.state.searchResName + ' found in database! - '}
-            <a href={this.state.searchResLink} target="_blank">{this.state.searchResLink}</a>
-          </div> :
-          <div>{this.state.searchResName}</div>
-        }
-      </div>
+            {
+              this.state.searchResLink
+              ? <div>{  this.state.searchResName + ' found in database! - '}
+                  <a href={this.state.searchResLink} target="_blank">{this.state.searchResLink }</a>
+                </div>
+              : <div>{ this.state.searchResName }</div>
+            }
 
-      <div className="Button-parent">
-        <Button className="Saved-items" onClick={this.renderPastSearches}>
-          MY PAST SEARCHES
-        </Button>
-        <div>
-          {this.state.pastSearches.map((ingredient) => (
-            <search key={ingredient._id}>{ingredient.name + ' - ' + ingredient.link}<br/></search>
+            {/*renders my past searches */}
+            <div className="Button-parent">
+              <Button className="Saved-items" onClick={this.renderPastSearches}>MY PAST SEARCHES</Button>
+                {this.state.pastSearches.map(function(ingredient) {<search key={ingredient._id}>{ingredient.name + ' - ' + ingredient.link}<br/></search>})}
+            </div>
+          </div>
           )
-          )}
-        </div>
-      </div>
-    </div>)
   }
 
   render() {
