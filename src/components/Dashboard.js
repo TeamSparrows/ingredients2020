@@ -7,7 +7,6 @@ import '../App.css';
 import { bindAll } from 'lodash';
 import $ from 'jquery';
 
-
 class Dashboard extends Component {
   constructor(props) {
     super(props);
@@ -57,8 +56,6 @@ class Dashboard extends Component {
     return (
       <div className="Dashboard-btns">
         <Nav />
-
-
         <SearchIngredients
           setDashboardState={this.setDashboardState}
           search={this.state.search}
@@ -66,9 +63,7 @@ class Dashboard extends Component {
           handleSearch={this.handleSearch}
         />
 
-        <SelectImage/>
-
-        <img src={this.state.data_uri} className="Image-size" alt="" />
+        <SelectImage imgSrc={this.state.data_uri}/>
 
         <div className="Search-parent">
           { this.renderCurrentFlagged() }

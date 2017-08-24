@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
 class SelectImage extends Component {
-  
+
   handleSubmit(e) {
     e.preventDefault();
     const _this = this;
@@ -69,20 +69,23 @@ class SelectImage extends Component {
 
   render() {
     return (
-      <form
-        className="form-control"
-        onSubmit={this.handleSubmit.bind(this)}
-        encType='multipart/form-data'>
-        <input
-          className="custom-file-input"
-          type='file'
-          name='image'
-          onChange={this.handleFile.bind(this)} />
-        <input
-          className="Submit-btn neg-margin-t"
-          type="submit"
-          value="Submit"/>
-      </form>
+      <div>
+        <form
+          className="form-control"
+          onSubmit={this.handleSubmit.bind(this)}
+          encType='multipart/form-data'>
+          <input
+            className="custom-file-input"
+            type='file'
+            name='image'
+            onChange={this.handleFile.bind(this)} />
+          <input
+            className="Submit-btn neg-margin-t"
+            type="submit"
+            value="Submit"/>
+        </form>
+        <img src={this.props.imgSrc} className="Image-size" alt="" />
+      </div>
     )
   }
 }
