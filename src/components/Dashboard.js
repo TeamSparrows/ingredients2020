@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import SearchIngredients from './searchIngredients';
-import PastSearches from './pastSearches';
-import SelectImage from './selectImage';
-import RenderReslink from './renderReslink';
-import Nav from './nav';
-import '../app.css';
+import SearchIngredients from './SearchIngredients';
+import PastSearches from './PastSearches';
+import SelectImage from './SelectImage';
+import RenderReslink from './RenderReslink';
+import Nav from './Nav';
+import '../App.css';
 import { bindAll } from 'lodash';
 
 class Dashboard extends Component {
