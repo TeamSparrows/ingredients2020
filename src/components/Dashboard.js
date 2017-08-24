@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PastSearches from './PastSearches';
+import SelectImage from './SelectImage';
 import '../App.css';
 import { bindAll } from 'lodash';
 import $ from 'jquery';
@@ -175,10 +176,10 @@ class Dashboard extends Component {
             </form>
 
             {/* renders select image and submit */}
-            <form className="form-control" onSubmit={this.handleSubmit} encType='multipart/form-data'>
-              <input className="custom-file-input" type='file' name='image' onChange={this.handleFile} />
-              <input className="Submit-btn neg-margin-t" type="submit" value="Submit"/>
-            </form>
+            <SelectImage
+              handleSubmit={this.handleSubmit}
+              handleFile={this.handleFile}
+            />
 
             <img src={this.state.data_uri} className="Image-size" alt="" />
 
@@ -194,6 +195,7 @@ class Dashboard extends Component {
                 { this.state.passed && <div>{ this.state.passed }</div> }
             </div>
 
+            {/* Renders Result Of Searches */}
             {
               this.state.searchResLink
               ? <div>{  this.state.searchResName + ' found in database! - '}
