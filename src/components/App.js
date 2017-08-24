@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import Landing from './landing';
-import Callback from '../callback/callback';
-import Auth from '../auth/auth';
+import Landing from './Landing';
+import Callback from '../Callback/Callback';
+import Auth from '../Auth/Auth';
 import history from './history';
-import Dashboard from './dashboard';
-import '../app.css';
+import Dashboard from './Dashboard';
+import '../App.css';
 
 const auth = new Auth();
 
