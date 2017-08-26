@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import SearchIngredients from './SearchIngredients';
 import PastSearches from './PastSearches';
 import SelectImage from './SelectImage';
-import RenderReslink from './RenderReslink';
 import Nav from './Nav';
 import '../App.css';
 import { bindAll } from 'lodash';
