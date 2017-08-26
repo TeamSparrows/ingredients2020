@@ -4,8 +4,8 @@ var Ingredient = require('./db/models/ingredients');
 var path = require('path');
 
 var vision = require('@google-cloud/vision')({
-  keyFilename: 'key.json',
-  projectId: 'ingredients2020-176919'
+  keyFilename: 'keys.json',
+  projectId: 'sandbox-171422'
 });
 
 //createUser api route
@@ -73,19 +73,26 @@ exports.pastSearches = function(req, res) {
 }
 
 exports.googleCloudSearch = function(req, res) {
+  console.log('google cloudsearch ran')
   var buf = new Buffer(req.body.data_uri.replace(/^data:image\/\w+;base64,/, ""),'base64');
   vision.textDetection({ content: buf }, function(err, apiResponse) {
     if(err) {
       res.end('Cloud Vision Error:', err);
     } else {
+
       var detections = apiResponse.fullTextAnnotation.text;
+      console.log('detections', detections);
       var arrayOfIngredients = [];
       var ingredientsArray = detections.replace(/\n/g, ' ').replace(/\./g, ',').toLowerCase().split(', ');
+      console.log('ingredientsArray', ingredientsArray);
+
       var toxicIngredients = [];
+      console.log('toxicIngredients', toxicIngredients);
       const numberOfIngredients = ingredientsArray.length;
+      console.log('numberOfIngredients', numberOfIngredients);
       var counter = 0;
       ingredientsArray.forEach(function(ingredient, index) {
-        Ingredient.findOne({name: ingredient}, 
+        Ingredient.findOne({name: ingredient},
           function(err, ingredientObj) {
           //if there is an ingredient, return the document JSON, on the front end, we can extrapolate the name and link!
          counter++;
@@ -93,9 +100,9 @@ exports.googleCloudSearch = function(req, res) {
             //res.status(401).send(`${ingredient} not in database`);
             console.log('ERROR:' + err);
           } else if(ingredientObj) {
-            console.log(ingredientObj);
+            console.log('ingredientObj', ingredientObj);
             toxicIngredients.push(ingredientObj);
-          } 
+          }
 
           if (counter === numberOfIngredients-1){
             var filenameObj = {
@@ -115,10 +122,11 @@ exports.googleCloudSearch = function(req, res) {
               })
             }
             res.json(toxicIngredients);
+            console.log('toxicIngredients', toxicIngredients);
           }
 
-        }); 
-      })      
+        });
+      })
     }
   })
 }
