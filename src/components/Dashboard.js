@@ -25,8 +25,8 @@ class Dashboard extends Component {
     bindAll(this, 'setDashboardState', 'logout', 'renderCurrentFlagged', 'renderReslink');
   }
 
-  setDashboardState(state) {
-    this.setState(state);
+  setDashboardState(data) {
+    this.setState(data);
   }
   logout() {
     this.props.auth.logout();
@@ -42,13 +42,21 @@ class Dashboard extends Component {
     )
   }
 
-  renderCurrentFlagged() {
+  renderCurrentFlagged(data) {
+    if (data) {
+      this.setState(data);
+    }
+    console.log('renderCurrentFlagged', Array.isArray(this.state.currentFlagged) );
+    console.log('this.state.currentFlagged', JSON.stringify(this.state.currentFlagged, null, 2));
+
     return (
       this.state.currentFlagged.map(function(ingredient) {
-        <search className="Search-render" key={ingredient._id}>
-          <h3>{ingredient.name}</h3>
-          <p>{ingredient.link}</p>
-        </search>
+        return (
+          <search className="Search-render" key={ingredient._id}>
+            <h3>{ingredient.name}</h3>
+            <p>{ingredient.link}</p>
+          </search>
+        )
       })
     )
   }
@@ -69,17 +77,17 @@ class Dashboard extends Component {
           filename={this.state.filename}
           filetype={this.state.filetype}
           username={this.state.username}
+          renderCurrentFlagged={this.renderCurrentFlagged}
+          setDashboardState={this.setDashboardState}
         />
-
+        <img src={this.state.data_uri} className="Image-size" alt="" />
         <div className="Search-parent">
           { this.renderCurrentFlagged() }
+          {console.log('i ran')}
+          {console.log(this.state.currentFlagged)}
           { this.state.passed && <div>{ this.state.passed }</div> }
         </div>
 
-        <RenderReslink
-          searchReslink={this.state.searchResLink}
-          searchResName={this.state.searchResName}
-        />
         { this.renderReslink() }
 
         <PastSearches

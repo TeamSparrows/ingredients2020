@@ -6,7 +6,7 @@ class Callback extends Component {
   sendToDashboard() {
     return setTimeout(() => {
       this.props.history.push('/dashboard');
-    }, 2000);
+    }, 1000);
   }
 
   render() {
