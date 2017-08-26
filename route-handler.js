@@ -7,11 +7,6 @@ process.env.ENVIRONMENT = process.env.ENVIRONMENT || 'development';
 console.log('process.env.ENVIRONMENT', process.env.ENVIRONMENT);
 
 if (process.env.ENVIRONMENT === 'production') {
-  console.log('process.env.FOO', process.env.FOO);
-  console.log('process.env.FOO.hi', process.env.FOO.hi);
-}
-
-if (process.env.ENVIRONMENT === 'production') {
   console.log('production mode')
   var vision = require('@google-cloud/vision')({
     keyFilename: process.env.KEYS,
