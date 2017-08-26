@@ -3,10 +3,27 @@ var User = require('./db/models/users');
 var Ingredient = require('./db/models/ingredients');
 var path = require('path');
 
-var vision = require('@google-cloud/vision')({
-  keyFilename: 'keys.json',
-  projectId: 'sandbox-171422'
-});
+process.env.ENVIRONMENT = process.env.ENVIRONMENT || 'development';
+console.log('process.env.ENVIRONMENT', process.env.ENVIRONMENT);
+
+if (process.env.ENVIRONMENT === 'production') {
+  console.log('process.env.FOO', process.env.FOO);
+  console.log('process.env.FOO.hi', process.env.FOO.hi);
+}
+
+if (process.env.ENVIRONMENT === 'production') {
+  console.log('production mode')
+  var vision = require('@google-cloud/vision')({
+    keyFilename: process.env.KEYS,
+    projectId: 'sandbox-171422'
+  });
+} else {
+  var vision = require('@google-cloud/vision')({
+    keyFilename: '../Sandbox-7a20dde6100d.json',
+    projectId: 'sandbox-171422'
+  });
+}
+
 
 //createUser api route
 exports.findOrCreateUser = function(req, res) {
